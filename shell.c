@@ -90,6 +90,7 @@ void loop(void){
 		}
 		push(l, word);
 		commands = parse(word);
+		free(word);
 		
 		if (cmpr(commands[0], "cd")){
 
@@ -145,7 +146,7 @@ char *readBuffer(void){
 		}
 		else if((c != '\n') && (c != EOF)){
 			if (i >= bufferSize){
-				buffer = realloc(buffer, sizeof(char) * bufferSize);
+				buffer = realloc(buffer, sizeof(char) * (bufferSize += 2));
 			}
 			buffer[i] = c;
 			i++;
@@ -190,7 +191,7 @@ char **parse(char *string){
 	while(token != NULL){
 		
 		if(i >= bufferSize){
-			newString = (char **)realloc(newString, sizeof(char *) *bufferSize);
+			newString = (char **)realloc(newString, sizeof(char *) *(bufferSize += 2));
 		}
 
 		newString[i] = token;
